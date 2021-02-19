@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+
+    dependencies {
+        implementation "androidx.annotation:annotation:1.1.0"
+        api project(":terminal-emulator")
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.MIN_SDK_VERSION
+        targetSdkVersion rootProject.TARGET_SDK_VERSION
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 28
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.1'
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.kide'
+            artifactId 'terminal-view'
+            version '0.106.1'
+            artifact("$buildDir/outputs/aar/terminal-view-release.aar")
+        }
+    }
+ 
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/kide/kide-app")
+
+            credentials {
+                username = System.getenv("GH_USERNAME")
+                password = System.getenv("GH_TOKEN")
+            }
+        }
+    }
+}

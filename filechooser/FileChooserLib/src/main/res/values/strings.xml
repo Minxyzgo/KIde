@@ -1,0 +1,17 @@
+<resources>
+    <string name="lib_name">FileChooser</string>
+    <string name="root_folder_name">Root</string>
+    <string name="root_directory">Root directory</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="new_folder">New Folder</string>
+    <string name="create_new_folder">Create new folder</string>
+    <string name="ok_title">OK</string>
+    <string name="cancel_title">@android:string/cancel</string>
+    <string name="can_not_create_new_folder">Can\'t create a new folder here!</string>
+    <string name="can_not_create_new_file">Can\'t create a new file here!</string>
+    <string name="can_not_write_data">Can\'t write data in this folder!</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="removable_storage">Removable storage</string>
+    <string name="input_message">Input file name</string>
+    <string name="save_file">SAVE</string>
+</resources>

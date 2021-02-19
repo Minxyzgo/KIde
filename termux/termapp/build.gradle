@@ -1,0 +1,170 @@
+plugins {
+  id "com.android.library"
+}
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+    ndkVersion project.properties.ndkVersion
+
+
+
+    dependencies {
+        implementation "androidx.annotation:annotation:1.1.0"
+        implementation "androidx.viewpager:viewpager:1.0.0"
+        implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+        implementation project(":terminal-view")
+    }
+
+    defaultConfig {
+//        applicationId "com.kide"
+        minSdkVersion project.properties.minSdkVersion.toInteger()
+        targetSdkVersion project.properties.targetSdkVersion.toInteger()
+        versionCode 107
+        versionName "0.107"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        externalNativeBuild {
+            ndkBuild {
+                cFlags "-std=c11", "-Wall", "-Wextra", "-Werror", "-Os", "-fno-stack-protector", "-Wl,--gc-sections"
+            }
+        }
+    }
+
+//    splits {
+//        abi {
+//            enable true
+//
+//            reset ()
+//            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+//        }
+//
+//    }
+
+    signingConfigs {
+        debug {
+            storeFile file('dev_keystore.jks')
+            keyAlias 'alias'
+            storePassword 'xrj45yWGLbsO7W0v'
+            keyPassword 'xrj45yWGLbsO7W0v'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            //shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/cpp/Android.mk"
+        }
+    }
+
+    lintOptions {
+        disable 'ProtectedPermissions'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.robolectric:robolectric:4.4'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+task versionName {
+  doLast {
+    print android.defaultConfig.versionName
+  }
+}
+
+def downloadBootstrap(String arch, String expectedChecksum, String version) {
+    def digest = java.security.MessageDigest.getInstance("SHA-256")
+
+    def localUrl = "src/main/cpp/bootstrap-" + arch + ".zip"
+    def file = new File(projectDir, localUrl)
+    if (file.exists()) {
+        def buffer = new byte[8192]
+        def input = new FileInputStream(file)
+        while (true) {
+            def readBytes = input.read(buffer)
+            if (readBytes < 0) break
+            digest.update(buffer, 0, readBytes)
+        }
+        def checksum = new BigInteger(1, digest.digest()).toString(16)
+        if (checksum == expectedChecksum) {
+            return
+        } else {
+            logger.quiet("Deleting old local file with wrong hash: " + localUrl)
+            file.delete()
+        }
+    }
+
+    def remoteUrl = "https://github.com/kide/kide-packages/releases/download/bootstrap-" + version + "/bootstrap-" + arch + ".zip"
+    logger.quiet("Downloading " + remoteUrl + " ...")
+
+    file.parentFile.mkdirs()
+    def out = new BufferedOutputStream(new FileOutputStream(file))
+
+    def connection = new URL(remoteUrl).openConnection()
+    connection.setInstanceFollowRedirects(true)
+    def digestStream = new java.security.DigestInputStream(connection.inputStream, digest)
+    out << digestStream
+    out.close()
+
+    def checksum = new BigInteger(1, digest.digest()).toString(16)
+    if (checksum != expectedChecksum) {
+        file.delete()
+        throw new GradleException("Wrong checksum for " + remoteUrl + ": expected: " + expectedChecksum + ", actual: " + checksum)
+    }
+}
+
+clean {
+    doLast {
+        def tree = fileTree(new File(projectDir, 'src/main/cpp'))
+        tree.include 'bootstrap-*.zip'
+        tree.each { it.delete() }
+    }
+}
+
+task downloadBootstraps(){
+    doLast {
+        def version = "2021.02.11-r1"
+        downloadBootstrap("aarch64", "8913a0f6304b497a8e237a7a38cef17da39a8f39836fd63aa2ff7d9e4ae128a3", version)
+        downloadBootstrap("arm",     "c253fdbe7086ad1ae1826779465c30ca8bda6564536f4d00735b26ea3f6c1b7e", version)
+        downloadBootstrap("i686",    "931dc7ed8d208eae0a7445959356d761dc1644e2cc1ebb1f33688540f8c1c68a", version)
+        downloadBootstrap("x86_64",  "ac7e3809bc919a81b903bb22693e09afcbe126e6604883648cbeda48e6ba9665", version)
+    }
+}
+
+afterEvaluate {
+  android.libraryVariants.all { variant ->
+    variant.javaCompileProvider.get().dependsOn(downloadBootstraps)
+  }
+}
+repositories {
+    mavenCentral()
+}

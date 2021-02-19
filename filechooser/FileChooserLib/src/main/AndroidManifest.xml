@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kimcy929.filec">
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <activity
+            android:name="com.kimcy929.filec.FileChooserActivity"
+            android:theme="@style/FileChooserBaseTheme.NoActionBar"
+            android:label="@string/lib_name"/>
+    </application>
+
+</manifest>

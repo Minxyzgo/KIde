@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"  >
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.github.ahmadaghazadeh.sample.CodeModel" />
+
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <com.github.ahmadaghazadeh.editor.widget.CodeEditor
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:code="@{viewModel.code}"
+            bind:isReadOnly="@{false}"
+            bind:isShowExtendedKeyboard="@{true}"
+            bind:lang="@{viewModel.lang}"
+            bind:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
+</layout>
+
+

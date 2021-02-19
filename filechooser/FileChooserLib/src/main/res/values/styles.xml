@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FileChooserBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/accentColor</item>
+    </style>
+
+    <style name="FileChooserBaseTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="FileChooserBaseTheme.AppBarOverlay" />
+
+    <style name="MyButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
+    <!--Dialog style-->
+    <style name="MyAlertDialogAppCompatStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@android:color/white</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <item name="android:windowTitleStyle">@style/TitleDialogTextStyle</item>
+    </style>
+
+    <style name="TitleDialogTextStyle" parent="Base.DialogWindowTitle.AppCompat">
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.EditorFragment">
+
+    <view
+        android:id="@+id/editor"
+        class="com.github.ahmadaghazadeh.editor.widget.CodeEditor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></view>
+
+    <!--<android.support.v4.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <view
+                    android:id="@+id/lineView"
+                    class="cn.minxyzgo.kide.ui.home.EditorFragment$LineView"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:ems="3" />
+
+                <view
+                    android:id="@+id/editTextTextMultiLine"
+                    class="cn.minxyzgo.kide.ui.home.EditorFragment$SyntaxEditor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:accessibilityLiveRegion="none"
+                    android:autoSizeTextType="uniform"
+                    android:autofillHints=""
+                    android:elegantTextHeight="true"
+                    android:ellipsize="end"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textDirection="anyRtl"
+                    android:textIsSelectable="true"
+                    android:textSize="12sp"
+                    android:typeface="monospace"
+                    tools:layout_gravity="start" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
