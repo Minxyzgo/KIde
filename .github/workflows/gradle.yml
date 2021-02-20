@@ -1,0 +1,24 @@
+name: Tests
+on: [push, workflow_dispatch]
+jobs:
+  buildJava8:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up PATH
+      run: echo "${ANDROID_HOME}/build-tools/30.0.1" >> $GITHUB_PATH
+
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+
+    - name: Build debug android apk
+      run: ./gradlew android:assembleDebug
+
+    - name: Upload android apk for testing
+      uses: actions/upload-artifact@v2
+      with:
+        name: Android Apk (zipped)
+        path: android/build/outputs/apk
