@@ -2,11 +2,9 @@ include ':terminal-emulator'
 include ':terminal-view'
 include ':termapp'
 include ':library'
-include ':sample'
 include ':FileChooserLib'
 include ':app',':filechooser',':codeeditor',':termapp'
 project(':FileChooserLib').projectDir = new File(rootDir, 'filechooser/FileChooserLib/')
-project(':sample').projectDir = new File(rootDir, 'filechooser/sample/')
 project(':library').projectDir = new File(rootDir, 'codeeditor/library/')
 project(':termapp').projectDir = new File(rootDir, 'termux/termapp/')
 project(':terminal-view').projectDir = new File(rootDir, 'termux/terminal-view/')
