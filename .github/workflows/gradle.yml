@@ -18,7 +18,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build debug android apk
-      run: ./gradlew android:assembleDebug
+      run: ./gradlew app:assembleDebug
 
     - name: Upload android apk for testing
       uses: actions/upload-artifact@v2
