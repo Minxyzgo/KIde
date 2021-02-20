@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 28
-    ndkVersion '22.0.7026061'
+    compileSdkVersion project.properties.compileSdkVersion.toInteger()
+    ndkVersion project.properties.ndkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.MIN_SDK_VERSION
-        targetSdkVersion rootProject.TARGET_SDK_VERSION
+        minSdkVersion project.properties.minSdkVersion.toInteger()
+        targetSdkVersion project.properties.targetSdkVersion.toInteger()
 
         externalNativeBuild {
             ndkBuild {

@@ -4,10 +4,8 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion project.properties.compileSdkVersion.toInteger()
     ndkVersion project.properties.ndkVersion
-
-
 
     dependencies {
         implementation "androidx.annotation:annotation:1.1.0"
