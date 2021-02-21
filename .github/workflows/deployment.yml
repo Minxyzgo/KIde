@@ -1,0 +1,24 @@
+name: Deployment
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  buildJava8:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+    - name: build string
+      run: |
+        git clone --depth=1 --branch=master https://github.com/Minxyzgo/KideBuilds ../KideBuilds
+        cd ../KideBuilds
+        git add .
+        git commit -m "Updating to build"
+        git push https://Minxyzgo:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/KideBuilds
