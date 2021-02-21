@@ -18,4 +18,4 @@ jobs:
         cd ../KideBuilds
         git add .
         git commit -m "Updating to build"
-        git push https://Minxyzgo:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/KideBuilds
+        git push https://Minxyzgo:${{ secrets.API_TOKEN_GITHUB }}@github.com/Minxyzgo/KideBuilds
