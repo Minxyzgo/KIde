@@ -15,10 +15,9 @@ jobs:
     - name: build string
       run: |
         cd ../
-        git config --global user.email "cli@github.com"
-        git config --global user.name "Github Actions"
         git clone --depth=1 --branch=master https://github.com/Minxyzgo/KideBuilds ../KideBuilds
         cd ../KideBuilds
-        git add .
-        git commit -m "Updating to build"
-        git push https://Minxyzgo:${{ secrets.API_TOKEN_GITHUB }}@github.com/Minxyzgo/KideBuilds
+        BNUM=$(($GITHUB_RUN_NUMBER))
+        git tag ${BNUM}
+        git config --global user.name "Build Uploader"
+        git push https://Minxyzgo:${{ secrets.API_TOKEN_GITHUB }}@github.com/Minxyzgo/KideBuilds ${BNUM}
